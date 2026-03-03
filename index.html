@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CORZEYE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0d0b;
+      --surface: #161410;
+      --border: #2a2520;
+      --text: #d4c9b8;
+      --muted: #6b6259;
+      --accent: #c8a96e;
+      --accent2: #7a4f3a;
+      --inactive: #3a3530;
+      --inactive-text: #4a4540;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.3;
+      z-index: 999;
+    }
+
+    .container {
+      max-width: 680px;
+      width: 100%;
+    }
+
+    /* HEADER */
+    .header {
+      margin-bottom: 3rem;
+    }
+
+    .site-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 12vw, 6rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 0.9;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* SECTIONS */
+    .section-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .section-label:first-of-type {
+      margin-top: 0;
+    }
+
+    /* LINKS */
+    .link-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 0.5rem;
+    }
+
+    .link-entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.15s, color 0.15s;
+      gap: 1rem;
+    }
+
+    .link-entry:hover {
+      background: #1e1b17;
+      color: var(--accent);
+    }
+
+    .link-entry:hover .link-arrow {
+      transform: translateX(4px);
+      color: var(--accent);
+    }
+
+    .link-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .link-platform {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .link-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .link-desc {
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .link-arrow {
+      font-size: 1rem;
+      color: var(--muted);
+      transition: transform 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+
+    /* INACTIVE */
+    .link-entry.inactive {
+      opacity: 0.4;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .link-entry.inactive .link-name {
+      color: var(--muted);
+    }
+
+    .inactive-note {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--inactive-text);
+      margin-top: 0.4rem;
+      padding-left: 0.1rem;
+    }
+
+    /* WIKI LINK */
+    .wiki-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.15s, color 0.15s;
+      margin-top: 2rem;
+    }
+
+    .wiki-link:hover {
+      background: #1e1b17;
+      color: var(--accent);
+    }
+
+    .wiki-link:hover .link-arrow {
+      transform: translateX(4px);
+      color: var(--accent);
+    }
+
+    .wiki-link-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .wiki-link-tag {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+    }
+
+    .wiki-link-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .wiki-link-desc {
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.58rem;
+      line-height: 1.7;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .footer strong {
+      color: #5a5450;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <div class="site-label">corzeye.com</div>
+      <h1>Corzeye</h1>
+      <div class="tagline">Content Creator &nbsp;·&nbsp; Game Dev &nbsp;·&nbsp; Finland</div>
+    </div>
+
+    <div class="section-label">Active Channels</div>
+    <div class="link-grid">
+      <a class="link-entry" href="https://youtube.com/@Corzeye" target="_blank" rel="noopener">
+        <div class="link-left">
+          <span class="link-platform">YouTube</span>
+          <span class="link-name">@Corzeye</span>
+          <span class="link-desc">Main channel</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-entry" href="https://youtube.com/@CorzeyeLIVE" target="_blank" rel="noopener">
+        <div class="link-left">
+          <span class="link-platform">YouTube</span>
+          <span class="link-name">@CorzeyeLIVE</span>
+          <span class="link-desc">Live channel</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-entry" href="https://youtube.com/@CorzeyeShorts" target="_blank" rel="noopener">
+        <div class="link-left">
+          <span class="link-platform">YouTube</span>
+          <span class="link-name">@CorzeyeShorts</span>
+          <span class="link-desc">Shorts channel</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-entry" href="https://twitch.tv/Corzeye" target="_blank" rel="noopener">
+        <div class="link-left">
+          <span class="link-platform">Twitch</span>
+          <span class="link-name">Corzeye</span>
+          <span class="link-desc">Live streaming</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a class="link-entry" href="https://tiktok.com/@Corzeye" target="_blank" rel="noopener">
+        <div class="link-left">
+          <span class="link-platform">TikTok</span>
+          <span class="link-name">@Corzeye</span>
+          <span class="link-desc">Short form</span>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="section-label">Inactive</div>
+    <div class="link-grid">
+      <div class="link-entry inactive">
+        <div class="link-left">
+          <span class="link-platform">X / Twitter</span>
+          <span class="link-name">@Corzeye</span>
+        </div>
+        <span class="link-arrow">—</span>
+      </div>
+      <div class="link-entry inactive">
+        <div class="link-left">
+          <span class="link-platform">Instagram</span>
+          <span class="link-name">@Corzeye</span>
+        </div>
+        <span class="link-arrow">—</span>
+      </div>
+    </div>
+    <div class="inactive-note">these exist but aren't being used right now</div>
+
+    <a class="wiki-link" href="/wiki/index.html">
+      <div class="wiki-link-left">
+        <span class="wiki-link-tag">Lore & Games</span>
+        <span class="wiki-link-title">Wiki</span>
+        <span class="wiki-link-desc">Universe, creatures, story database</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <div class="footer">
+      <strong>A note on tools:</strong> The code for this website is written by AI based on my direction. All creative decisions, style choices, layout, and lore, including story ideas, characters, and game concepts, are made by me. AI helps me write and build faster, but makes no final decisions. Everything here is mine.
+    </div>
+
+  </div>
+</body>
+</html>
