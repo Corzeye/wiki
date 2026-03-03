@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Facsimiles — That's Not Joe Wiki</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0d0b;
+      --surface: #161410;
+      --border: #2a2520;
+      --text: #d4c9b8;
+      --muted: #6b6259;
+      --accent: #c8a96e;
+      --accent2: #7a4f3a;
+      --danger: #8b3a3a;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.3;
+      z-index: 999;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .breadcrumb {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { margin: 0 0.5rem; }
+
+    .game-tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 9vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* collapsible sections */
+    .section {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 0;
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-align: left;
+      transition: color 0.15s;
+    }
+
+    .section-toggle:hover { color: var(--accent); }
+
+    .section-toggle .icon {
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .section-toggle.open .icon {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    .section-body {
+      display: none;
+      padding-bottom: 1.5rem;
+    }
+
+    .section-body.open { display: block; }
+
+    .section-body p {
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: var(--text);
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-body p:last-child { margin-bottom: 0; }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .warning {
+      color: var(--danger);
+      font-weight: 600;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.62rem;
+      min-width: 110px;
+      padding-top: 0.1rem;
+    }
+
+    .stat-value {
+      color: var(--text);
+    }
+
+    .footer-nav {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-nav a {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="breadcrumb">
+      <a href="../index.html">Wiki</a>
+      <span>/</span>
+      <a href="#">That's Not Joe</a>
+      <span>/</span>
+      Facsimiles
+    </div>
+
+    <div class="game-tag">That's Not Joe</div>
+    <h1>Facsimiles</h1>
+    <div class="tagline">Alien species &nbsp;·&nbsp; Class: Infiltrator &nbsp;·&nbsp; Status: Active on Earth</div>
+
+    <div class="section">
+      <button class="section-toggle open" onclick="toggle(this)">
+        Overview <span class="icon">▶</span>
+      </button>
+      <div class="section-body open">
+        <p>
+          <span class="highlight">Facsimiles</span> is the name given by humans to an extraterrestrial species responsible for the silent takeover of numerous civilized planets across the universe. Earth is neither their first target nor their last. Hundreds of planets have fallen before it, and hundreds more are projected to follow.
+        </p>
+        <p>
+          The name is human in origin. The creatures have their own language and their own name for themselves, neither of which is known.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Appearance <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          In their natural state, Facsimiles are tall, thin creatures composed primarily of a dark viscous ooze, superficially similar to tar. Beneath the outer layer lies a denser, more structured biological material. They absorb water and nutrients directly through their surface rather than consuming them orally.
+        </p>
+        <p>
+          Their eyes, when visible, appear as white glowing points. They have no visible mouth.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Morphing Technology <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          Facsimiles are <span class="highlight">not naturally capable of shapeshifting</span>. Instead, they developed advanced technology that allows them to permanently adopt the appearance of a living being. This process requires access to their ship and takes approximately one full day to complete when copying a living subject.
+        </p>
+        <p>
+          Once the transformation is complete it is essentially permanent. Even severe physical trauma produces a convincing human response. However, significant damage will cause <span class="warning">dark ooze to bleed through</span> the human exterior. The creature continues to heal regardless, as the biological entity beneath remains intact.
+        </p>
+        <p>
+          Because morphing requires their ship, a Facsimile stranded on a planet <span class="highlight">cannot change its form</span>. It is locked into whoever it has become.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Arrival on Earth <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          Facsimile vessels travel at extraordinary speeds, entering atmospheres at such velocity that their arrival goes largely unnoticed, typically touching down in remote or unpopulated areas.
+        </p>
+        <p>
+          The current Earth operation was considered high priority but was poorly executed. A significant number of Facsimiles were lost in transit, leaving <span class="highlight">only a single operative on the planet</span>. Given the cost of morphing and infiltration, leadership has determined it is not worth sending replacements until Earth becomes a higher value target. For now, one is enough to begin.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Infiltration Strategy <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          The standard method of planetary takeover involves identifying and replacing individuals of significant influence: political leaders, executives, public figures. Once in place, they distribute a biological agent through food and water supplies. Sufficient exposure converts humans into passive sleeper agents.
+        </p>
+        <p>
+          The single Facsimile currently on Earth has assumed the identity of a content creator, using the platform and eventual resources to begin distribution.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Perception <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          To most humans, a Facsimile in disguise is completely indistinguishable from the person it has replaced. However, individuals who subconsciously register that something is wrong perceive the creature differently. Their mind, unable to fully process the wrongness of the imitation, projects that wrongness onto the face itself. These individuals see a <span class="highlight">distorted, warped version</span> of the human face it's wearing. Features that are almost right but deeply, unmistakably off.
+        </p>
+        <p>
+          This is not the Facsimile's true appearance. It is what a human brain produces when it knows something is wrong but cannot name what.
+        </p>
+        <p>
+          Children are particularly susceptible to this, as they have not yet learned to override instinct with social acceptance. The Facsimile cannot prevent it. It is not a flaw in their technology. It is a flaw in human psychology that works against them.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Weakness <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          Facsimiles have a severe biological vulnerability to <span class="warning">Vitamin D</span>. Direct contact causes immediate pain and tissue damage. Small amounts are not lethal but provoke a violent response. Sustained exposure to concentrated Vitamin D is theorized to be fatal.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Behavior <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          Facsimiles are highly intelligent and <span class="warning">deeply sadistic</span>. The takeover process does not require cruelty, but they prefer it. They routinely taunt their victims before and during replacement, prolonging the process for their own satisfaction. They do not need to do this. They simply enjoy it.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="section-toggle" onclick="toggle(this)">
+        Leadership <span class="icon">▶</span>
+      </button>
+      <div class="section-body">
+        <p>
+          Facsimiles operate under a centralized hierarchy based on their home planet, the name and location of which remains unknown to humans. Individual operatives carry out planetary assignments largely independently but ultimately report to a broader organizational structure.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="../index.html">← Back to Wiki</a>
+    </div>
+
+  </div>
+
+  <script>
+    function toggle(btn) {
+      btn.classList.toggle('open');
+      const body = btn.nextElementSibling;
+      body.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
